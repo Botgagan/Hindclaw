@@ -1,0 +1,24 @@
+# OpenClaw system files
+.openclaw/
+
+# Generated images (don't commit)
+generated/
+
+# Memory/state files (personal data)
+memory/*.json
+memory/**/*
+
+# Environment files with secrets
+*.env
+!skills/*/scripts/*.env.example
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# OpenClaw system files
+agents/
