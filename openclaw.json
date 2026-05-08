@@ -1,0 +1,170 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/home/node/.openclaw/workspace",
+      "models": {
+        "openrouter/auto": {
+          "alias": "OpenRouter"
+        }
+      },
+      "imageGenerationModel": {
+        "primary": "openrouter/google/gemini-2.5-flash-image"
+      },
+      "model": {
+        "primary": "openrouter/nvidia/nemotron-3-super-120b-a12b:free"
+      },
+      "heartbeat": {
+        "every": "30m",
+        "lightContext": true
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "model": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "tools": {
+          "profile": "full"
+        }
+      },
+      {
+        "id": "orchestrator",
+        "name": "orchestrator",
+        "workspace": "/home/node/.openclaw/workspace/orchestrator",
+        "agentDir": "/home/node/.openclaw/agents/orchestrator/agent"
+      },
+      {
+        "id": "company",
+        "name": "company",
+        "workspace": "/home/node/.openclaw/workspace/company",
+        "agentDir": "/home/node/.openclaw/agents/company/agent"
+      },
+      {
+        "id": "personality",
+        "name": "personality",
+        "workspace": "/home/node/.openclaw/workspace/personality",
+        "agentDir": "/home/node/.openclaw/agents/personality/agent"
+      },
+      {
+        "id": "social-media",
+        "name": "social-media",
+        "workspace": "/home/node/.openclaw/workspace/social-media",
+        "agentDir": "/home/node/.openclaw/agents/social-media/agent",
+        "tools": {
+          "profile": "full"
+        },
+        "heartbeat": {
+          "every": "5m",
+          "lightContext": true,
+          "isolatedSession": true
+        }
+      }
+    ]
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "93a3fbccd37edff93ff726c124db52f457e337dac8760ee8"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "reminders.add",
+        "sms.send",
+        "sms.search"
+      ]
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "tools": {
+    "profile": "full",
+    "web": {
+      "search": {
+        "provider": "gemini",
+        "enabled": true
+      }
+    },
+    "exec": {
+      "security": "full"
+    }
+  },
+  "auth": {
+    "profiles": {
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "groups": {
+        "*": {
+          "requireMention": true
+        }
+      },
+      "botToken": "8742627208:AAEncIreXqStIdOebX3Hcf_khQ2Du1N6c2A",
+      "allowFrom": [6002828622]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "google": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": "AIzaSyAUkLF8hU6ng7-IYsydPVB1aKqa00tcBLs"
+          }
+        }
+      },
+      "openrouter": {
+        "enabled": true
+      }
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-04-09T07:46:40.566Z",
+    "lastRunVersion": "2026.4.9",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.4.9",
+    "lastTouchedAt": "2026-04-22T10:33:13.546Z"
+  },
+  "bindings": [
+    {
+      "type": "route",
+      "agentId": "orchestrator",
+      "match": {
+        "channel": "telegram",
+        "accountId": "default"
+      }
+    }
+  ]
+}
